@@ -112,13 +112,24 @@ for (let [,value] of map) {
 ```
 const { SourceMapConsumer, SourceNode } = require("source-map");
 ```
+
 ###字符串的扩展
 1. 字符的Unicode表示法，codePointAt()，String.fromCodePoint()，字符串的遍历器接口，at()均为解决Unicode编号大于0xFFFF的字符。字符串的遍历器接口使得字符串可以被for...of循环遍历。
 2. includes(), startsWith(), endsWith()，用于确定一个字符串是否包含在另一个字符串中，三个方法均匀以String实例为调用对象，返回值为布尔。
 3. repeat()方法返回一个新字符串，表示将原字符串重复n次；参数如果是小数，会被取整；参数NaN等同于0；如果repeat的参数是字符串，则会先转换成数字。
 4. padStart()，padEnd()，ES7推出了字符串补全长度的功能。如果某个字符串不够指定长度，会在头部或尾部补全。padStart用于头部补全，padEnd用于尾部补全。padStart和padEnd一共接受两个参数，第一个参数用来指定字符串的最小长度，第二个参数是用来补全的字符串。padStart的常见用途是为数值补全指定位数，提示字符串格式。  
-````
+```
 '12'.padStart(10, 'YYYY-MM-DD') // "YYYY-MM-12"
 '09-12'.padStart(10, 'YYYY-MM-DD') // "YYYY-09-12"
-````  
+```
 5.模板字符串。模板字符串（template string）是增强版的字符串，用反引号标识。模板字符串中嵌入变量，需要将变量名写在${}之中。
+
+###正则的扩展  
+
+1.RegExp.escape()  
+字符串转义以后，可以使用RegExp构造函数生成正则模式。
+```
+var str = 'hello. how are you?';
+var regex = new RegExp(RegExp.escape(str), 'g');
+assert.equal(String(regex), '/hello\. how are you\?/g');
+```
