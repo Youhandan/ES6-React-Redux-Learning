@@ -465,12 +465,12 @@ const headAndTail = (head, ...tail) => [head, tail];
 headAndTail(1, 2, 3, 4, 5)
 // [1,[2,3,4,5]]
 ```
-***使用注意点**
-箭头函数有几个使用注意点。
-（1）函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。
-（2）不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。
-（3）不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用Rest参数代替。
-（4）不可以使用yield命令，因此箭头函数不能用作Generator函数。*
+**使用注意点**
+箭头函数有几个使用注意点。  
+（1）函数体内的this对象，就是定义时所在的对象，而不是使用时所在的对象。  
+（2）不可以当作构造函数，也就是说，不可以使用new命令，否则会抛出一个错误。  
+（3）不可以使用arguments对象，该对象在函数体内不存在。如果要用，可以用Rest参数代替。  
+（4）不可以使用yield命令，因此箭头函数不能用作Generator函数。  
 
 **嵌套的箭头函数**
 箭头函数内部，还可以再使用箭头函数。下面是一个ES5语法的多重嵌套函数。
@@ -539,5 +539,41 @@ document.querySelectorAll("div.myClass")
 ::find("p")
 ````
 
-7.尾调用优化（难，以后需要再看）
+7.尾调用优化（难，以后需要再看）  
 
+###对象的扩展
+
+1.属性的简洁表达  
+如果某个方法的值是一个Generator函数，前面需要加上星号。  
+```
+var obj = {
+  * m(){
+    yield 'hello world';
+  }
+};
+```
+2.属性名表达式  
+注意，属性名表达式与简洁表示法，不能同时使用，会报错。  
+````
+// 报错
+var foo = 'bar';
+var bar = 'abc';
+var baz = { [foo] };
+
+// 正确
+var foo = 'bar';
+var baz = { [foo]: 'abc'};
+````
+
+3.方法的name属性  
+有两种特殊情况：bind方法创造的函数，name属性返回“bound”加上原函数的名字；Function构造函数创造的函数，name属性返回“anonymous”。  
+````
+(new Function()).name // "anonymous"
+
+var doSomething = function() {
+  // ...
+};
+doSomething.bind().name // "bound doSomething"
+````
+
+4.
